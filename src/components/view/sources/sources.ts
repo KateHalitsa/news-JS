@@ -2,21 +2,32 @@ import { Source } from '../../../types/typesView';
 import './sources.css';
 
 class Sources {
-    draw(data:Source[]) {
-        const fragment = document.createDocumentFragment();
-        const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp');
+   public draw(data: Source[]): void {
+    const fragment = document.createDocumentFragment();
+    const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp');
 
-        data.forEach((item) => {
-            const sourceClone = sourceItemTemp!.content.cloneNode(true)as DocumentFragment;
+    if (!sourceItemTemp) {
+        throw new Error('Source template was not found');
+    }
 
-            sourceClone.querySelector('.source__item-name')!.textContent = item.name;
-            if (item.id !== null) {
-            sourceClone.querySelector('.source__item')!.setAttribute('data-source-id', item.id);
-            }
-            fragment.append(sourceClone);
-        });
+    data.forEach((item) => {
+        const sourceClone = sourceItemTemp.content.cloneNode(true) as DocumentFragment;
+        const sourceElement = sourceClone.querySelector<HTMLElement>('.source__item');
 
-        document.querySelector('.sources')!.append(fragment);
+        if (!sourceElement) {
+            throw new Error('Source item was not found');
+        }
+
+        sourceClone.querySelector('.source__item-name')!.textContent = item.name;
+
+        if (item.id !== null) {
+            sourceElement.setAttribute('data-source-id', item.id);
+        }
+
+        fragment.append(sourceClone);
+    });
+
+    document.querySelector('.sources')!.append(fragment);
     }
 }
 

@@ -1,3 +1,14 @@
+* {
+    box-sizing: border-box;
+     margin: 0;
+    padding: 0;
+}
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  height: stretch;
+}
 body {
     color: #fff;
     background: #17181c;
@@ -32,4 +43,34 @@ footer .copyright a:hover {
 }
 footer .copyright:before {
     content: '©';
+}
+.content {
+    display: grid;
+    grid-template-columns: minmax(360px, 0.8fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+    height: stretch;
+    overflow: auto;
+}
+
+
+.news {
+    min-width: 0;
+}
+
+@media (max-width: 768px) {
+    .content {    
+        align-items: start;
+        flex-direction: column-reverse;
+        display: flex;
+    }
+
+    .sources {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+}
+.news-title,.message{
+    margin: 0 auto;
+    max-width: 700px;
 }

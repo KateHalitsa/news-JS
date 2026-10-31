@@ -19,12 +19,19 @@ class AppController extends AppLoader {
         }
 
         let target = e.target;
+        
 
         while (target instanceof Element && target !== newsContainer) {
             if (target.classList.contains('source__item')) {
                 const sourceId = target.getAttribute('data-source-id');
+            const selectedSource = target;
 
-                if (
+            const sourcesContainer = selectedSource.parentElement;
+
+            if (sourcesContainer) {
+                sourcesContainer.prepend(selectedSource);
+            }
+            if (
                     sourceId !== null &&
                     newsContainer.getAttribute('data-source') !== sourceId
                 ) {

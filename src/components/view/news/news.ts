@@ -3,17 +3,34 @@ import './news.css';
 
 class News {
     draw(data:Article[]) {
-        const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
+    const title = document.querySelector<HTMLElement>('.news-title');
+    const newsContainer = document.querySelector<HTMLElement>('.news');
+    if (!title || !newsContainer) return;
 
-        const fragment = document.createDocumentFragment();
-        const newsItemTemp = document.querySelector<HTMLTemplateElement>('#newsItemTemp');
-        if (!newsItemTemp) {
-            throw new Error('News template #newsItemTemp was not found');
+    const news = data.slice(0, 10);
+    const fragment = document.createDocumentFragment();
+
+    const newsItemTemp = document.querySelector<HTMLTemplateElement>('#newsItemTemp');
+
+    if (!newsItemTemp) {
+        throw new Error('News template was not found');
+    }
+    if (news.length === 0) {
+        const message= document.createElement("div");
+        message.classList.add("message");
+        message.textContent='No news';
+            newsContainer.replaceChildren(title,message);
+            return;
         }
-        news.forEach((item, idx) => {
-            const newsClone = newsItemTemp!.content.cloneNode(true) as DocumentFragment;
+    title.textContent = news[0].source.name;
+     
 
-            if (idx % 2) newsClone.querySelector('.news__item')!.classList.add('alt');
+    news.forEach((item, idx) => {
+        const newsClone = newsItemTemp.content.cloneNode(true) as DocumentFragment;
+
+        if (idx % 2) {
+            newsClone.querySelector('.news__item')!.classList.add('alt');
+        }
 
             const photo = newsClone.querySelector<HTMLElement>('.news__meta-photo');
 
@@ -34,9 +51,9 @@ class News {
 
             fragment.append(newsClone);
         });
-
-        document.querySelector('.news')!.innerHTML = '';
-        document.querySelector('.news')!.appendChild(fragment);
+        
+    newsContainer.replaceChildren(title, fragment);
+        
     }
 }
 
