@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const DotenvWebpackPlugin = require('dotenv-webpack');
 
+const repoName = 'news-JS';
+
 const baseConfig = {
     entry: path.resolve(__dirname, './src/index.ts'),
     mode: 'development',
@@ -35,6 +37,7 @@ const baseConfig = {
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, './dist'),
+        publicPath: `/${repoName}/`,
     },
     plugins: [
         new DotenvWebpackPlugin(),
