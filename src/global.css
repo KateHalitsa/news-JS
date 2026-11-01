@@ -74,7 +74,7 @@ footer img{
 
     .sources {
         flex-direction: row;
-        overflow-x: auto;
+        /*overflow-x: auto;*/
     }
 }
 .news-title,.message{
